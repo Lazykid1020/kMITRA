@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <title>kMITRA</title>
+</head>
+<style>
+    .main-heading{
+        position: absolute;
+        display: flex;
+        top: 3%;
+        left: 40%;
+    }
+    body{
+        background-color: rgb(202, 202, 170);
+
+    }
+    .title{
+        font-size: large;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+    }
+    .container{
+        position: absolute;
+        display: flex;
+        top: 13.24%;
+    
+        left: 33%;
+    }
+    #input-1{
+        
+        width: 11rem;
+        height: 1.321rem;
+        border-radius: 0.45rem;
+        border: solid 1px white ;
+        margin-left: 5px;
+
+    }
+    .container svg{
+        margin-top: 2.25px;
+    }
+    #input-1:hover,#input-1:focus{
+        border: solid 3px rgba(167, 110, 252,0.8) ;
+        transition: all 0.2s ease-in-out;
+        outline: none;
+    }
+    .selector{
+        outline: none;
+        position: absolute;
+        display: flex;
+        top: 13.75%;
+        left: 50%;
+        height: 1.189rem;
+
+    }
+    #op{
+        
+        width: 10rem;
+    }
+    .cont{
+        padding: 5px;
+        background-color: bisque;
+        max-width: fit-content;
+        max-height: fit-content;
+        border-radius: 10px;
+        padding: 12px;
+
+    }
+
+    .cont:hover{
+        border: 4px solid rgb(172, 89, 89)
+       
+    }
+
+
+    .grid-container{
+        display: grid;
+        /* background-color: azure; */
+        grid-template-columns: repeat(auto-fill, minmax(150px, 23rem));;
+        gap: 10%;
+        margin-top: 13.75%;
+        margin-left: 5%;
+        /* translate: 160px; */
+        
+    }
+    
+    .img{
+        width: 20rem;
+        max-height: fit-content;
+        
+    }
+    #pop{
+        display: "none";
+        margin-left: 30rem;
+
+    }
+
+</style>
+<body>
+    <button type="submit" id="post" onclick="show()">POST</button>
+
+    <header>
+        <h1 class="main-heading">
+            <span style="background-color:rgb(166,110,252);font-family: 'DM Serif Display', serif;">kMITRA </span>
+            <span style="color:rgb(255,228,225);margin-top: 3.55px;font-family:sans-serif;">Blogs</span>
+        </h1>
+    </header>
+    <div class="container">
+    <svg fill="#ffffff"  height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490.4 490.4" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M484.1,454.796l-110.5-110.6c29.8-36.3,47.6-82.8,47.6-133.4c0-116.3-94.3-210.6-210.6-210.6S0,94.496,0,210.796 s94.3,210.6,210.6,210.6c50.8,0,97.4-18,133.8-48l110.5,110.5c12.9,11.8,25,4.2,29.2,0C492.5,475.596,492.5,463.096,484.1,454.796z M41.1,210.796c0-93.6,75.9-169.5,169.5-169.5s169.6,75.9,169.6,169.5s-75.9,169.5-169.5,169.5S41.1,304.396,41.1,210.796z"></path> </g> </g></svg>
+    <input type="text" placeholder="search" id="input-1" oninput="inp()" >
+    </div>
+    <div class="selector">
+        
+        <select id="op">
+            <option value="0">sort</option>
+            <option value="1">oldest</option>
+            <option value="2">newest</option>
+            <option value="3">Author:acending</option>
+            <option value="4">Author:descending</option>
+        </select>
+        <button type='submit' id="but" > </button>
+    </div>
+    <div id="pop">
+        <div><button type="submit" id="close" onclick="hide()">X</button></div>
+        <div>title: <input type="text" id="titleinput"></div>
+        <div>name: <input type="text" id="nameinput"></div>
+        <div>Image url: <input type="text" id="imginput"></div>
+        
+        <div><button type="submit" id="sub" onclick="sub()" >submit</button></div>
+        <div><button type="submit" id="cls" onclick="cls()" >clear</button></div>
+    </div>
+    <div class="grid-container" id="grid">
+
+    </div>
+    <div style="height: 100px;"></div>
+
+
+
+    
+</body>
+<script>
+
+
+    document.getElementById('pop').hidden = true
+
+    var Obj=[
+            {
+                "title": "The Importance of Continuous Learning",
+                "author": "Jayashree",
+                "date": "2023-07-15",
+                "image": "https://source.unsplash.com/1250x700/?learning"
+            },
+            {
+                "title": "Exploring the Wonders of Nature",
+                "author": "Sai Krishna",
+                "date": "2023-07-10",
+                "image": "https://source.unsplash.com/1250x700/?nature"
+            },
+            {
+                "title": "The Art of Mindfulness",
+                "author": "Shivani",
+                "date": "2023-07-05",
+                "image": "https://source.unsplash.com/1250x700/?mindfulness"
+            },
+            {
+                "title": "A Journey to the Stars",
+                "author": "Sanjay",
+                "date": "2023-07-02",
+                "image": "https://source.unsplash.com/1250x700/?stars"
+            },
+            {
+                "title": "The Joy of Cooking",
+                "author": "Jayashree",
+                "date": "2023-06-28",
+                "image": "https://source.unsplash.com/1250x700/?cooking"
+            },
+            {
+                "title": "The Beauty of Wildlife",
+                "author": "Sai Krishna",
+                "date": "2023-06-20",
+                "image": "https://source.unsplash.com/1250x700/?wildlife"
+            },
+            {
+                "title": "Finding Inner Peace",
+                "author": "Jayashree",
+                "date": "2023-06-15",
+                "image": "https://source.unsplash.com/1250x700/?peace"
+            },
+            {
+                "title": "Capturing Moments",
+                "author": "Sai Krishna",
+                "date": "2023-06-10",
+                "image": "https://source.unsplash.com/1250x700/?moments"
+            }
+            ];
+    var grid=document.createElement("div");
+    function createEl(ele,txt,cls,ment){
+        let para = document.createElement(ele);
+        let node = document.createTextNode(txt);
+        console.log(node,para)
+        para.appendChild(node);
+        para.setAttribute("class",cls)
+        console.log(para)       
+        let element = document.getElementById(ment);
+        // console.log(1,para,element)
+        element.appendChild(para);
+
+    }
+    function gridCreate(a,s){
+        for(let i=0;i<s.length;i++){
+            let f=document.createElement("div");
+            // console.log(1,f)
+            let grid=document.getElementById("grid");
+            let img=document.createElement("img");
+            img.setAttribute("class","img")
+            // console.log(grid,f)
+            img.src=a[s[i]]["image"];
+            f.setAttribute("class","cont")
+            f.appendChild(img);
+            grid.appendChild(f)
+            let y="div"+(i+1).toString();
+            f.id=y;
+            let node=document.createTextNode("");
+            f.appendChild(node)
+            f.setAttribute("id",y);
+            // console.log(y,a[s[i]]["title"],f,grid);
+            createEl('div',a[s[i]]["title"],"title",y);
+            createEl('div',"date: "+a[s[i]]["date"],"date",y);
+            createEl('div',"author: "+a[s[i]]["author"],"author",y);   
+    };
+    };
+    
+    l=[]
+    for(let i=0;i<Obj.length;i++){
+        l.push(i)
+    }
+    gridCreate(Obj,l)
+    var k=[],k1=[];
+    var m=[],m1=[];
+    for(let i=0;i<Obj.length;i++){
+        
+        k.push(Obj[i]["author"])
+        k1.push([Obj[i]["author"],i] )
+        m.push(Obj[i]['date'])
+        m1.push([Obj[i]['date'],i])
+    }
+
+    // console.log(k,m,k1,m1)
+    k.sort()
+    m.sort()
+    k1.sort()
+    m1.sort()
+    // console.log(k,m,k1)
+    for(let i=0;i<Obj.length;i++){
+        l[i]=k1[i][1]
+    }
+    document.getElementById("but").addEventListener("click", sortNew);
+
+
+    function sortNew(){
+        let x=document.getElementById('op')
+        let v=x.value;
+        
+        let r=document.getElementById('grid')
+        const c=document.getElementById('grid')
+        c.innerHTML=""
+        let l=[];
+        for(let i=0;i<Obj.length;i++){
+        l.push(i)
+        }
+        if(v==0){
+            gridCreate(Obj,l)
+        }else if(v==2){
+            NEW()
+        }else if (v==1){
+            OLD()
+        }else if (v==3){
+            ASD()
+        }else if (v==4){
+            DCD()
+        }
+    }
+    function NEW(){
+        var m=[],m1=[],l=[];
+        for(let i=0;i<Obj.length;i++){
+            m1.push([Obj[i]['date'],i])
+        }
+        // console.log(m,m1)
+        m1.sort()
+        // console.log(m)
+        for(let i=0;i<Obj.length;i++){
+            l[i]=m1[i][1]
+        }
+        gridCreate(Obj,l)
+        // console.log(l)
+    }
+    function OLD(){
+        var m=[],m1=[],l=[];
+        for(let i=0;i<Obj.length;i++){
+            m1.push([Obj[i]['date'],i])
+        }
+        // console.log(m,m1)
+        m1.sort()
+        // console.log(m)
+        for(let i=0;i<Obj.length;i++){
+            l[(Obj.length)-i-1]=m1[i][1]
+        }
+        gridCreate(Obj,l)
+        // console.log(l)
+    }
+    function ASD(){
+        var m=[],m1=[],l=[];
+        for(let i=0;i<Obj.length;i++){
+            m1.push([Obj[i]['author'],i])
+        }
+        // console.log(m,m1)
+        m1.sort()
+        // console.log(m)
+        for(let i=0;i<Obj.length;i++){
+            l[i]=m1[i][1]
+        }
+        gridCreate(Obj,l)
+        // console.log(l)
+    }
+    function DCD(){
+        var m=[],m1=[],l=[];
+        for(let i=0;i<Obj.length;i++){
+            m1.push([Obj[i]['author'],i])
+        }
+        // console.log(m,m1)
+        m1.sort()
+        // console.log(m)
+        for(let i=0;i<Obj.length;i++){
+            l[(Obj.length)-i-1]=m1[i][1]
+        }
+        gridCreate(Obj,l)
+        // console.log(l)
+    }
+    function inp(){
+        let s=document.getElementById('input-1').value
+        // console.log(s)
+        var m=[],m1=[],l=[];
+        for(let i=0;i<Obj.length;i++){
+            m1.push([Obj[i]['title'],i])
+        }
+        // console.log(1,m,m1)
+        for(let i=0;i<Obj.length;i++){
+            // console.log(32)
+            let x=""
+            for(let j=0;j<s.length;j++){
+                x+=(m1[i][0][j])
+            }
+            if(x==s){
+            l.push(m1[i][1])
+            }
+            // console.log(21,l)
+        }        
+        // console.log(m)
+        for(let i=0;i<k1.lenght;i++){
+            l.push(m1[i][1])
+        }
+        const c=document.getElementById('grid')
+
+        c.innerHTML=""
+        // console.log(12,l,Obj)
+        gridCreate(Obj,l)
+        // console.log(l)
+        
+        
+    }
+    function hide() {
+            document.getElementById('pop').style.display = 'none'
+            
+        }
+    function show() {
+        document.getElementById('pop').style.display = 'flex'
+    }
+    function sub(){
+        
+        let n=document.getElementById('nameinput').value;
+        let t=document.getElementById('titleinput').value;
+        let img=document.getElementById('imginput').value;
+        if(img.lenght<1){
+            img='image not found';
+        }
+        const date = new Date();
+        let currentDay= String(date.getDate()).padStart(2, '0');
+        let currentMonth = String(date.getMonth()+1).padStart(2,"0");
+        let currentYear = date.getFullYear();
+        let currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
+        Obj.push({"title": t,
+                "author": n,
+                "date": currentDate,
+                "image": img})
+        let y=[]
+        for(let i=0;i<Obj.length;i++){
+            y.push(i)
+        }
+        console.log(32,Obj,y)
+        const c=document.getElementById('grid')
+
+        c.innerHTML=""
+        gridCreate(Obj,y)
+        console.log()
+        
+
+    };
+    function cls(){
+        for(let i=0;i<(Obj.length)-1;i++){
+        let v=document.getElementById("div"+(i+1).toString())
+        console.log(1,typeof(v))
+        try {
+        v.remove()
+        
+        } catch (error) {
+            console.log(45,v)
+        }}
+    };
+
+</script>
+
+</html>
